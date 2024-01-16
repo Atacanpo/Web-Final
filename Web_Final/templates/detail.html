@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Detail</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+  
+    .hotel-image {
+      max-width: 500px;
+      height: auto;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ hotel[1] }}</h1>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ hotel[11] }}" alt="Resim" class="hotel-image">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Harita</h4>
+                <div id="map" style="height: 300px; width: 300px;">
+                </div> 
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="hotel-info">
+                <h4>Fiyat</h4>
+                {% if 'user_id' in session and hotel[7] %}
+                    <p>Üye Fiyatı: {{ hotel[7] }}</p>
+                    <p>İndirim oranı: {{ hotel[10] }}</p>
+                {% else %}
+                    <p>{{ hotel[2] }} TL / gece</p>
+                {% endif %}
+            </div>
+            <div class="hotel-info">
+                <h4>Otel Olanakları: </h4>
+                <p>{{hotel[3]}}</p>
+            </div>
+            <div class="hotel-info">
+                <h4>Puan: </h4>
+                <p>{{ hotel[6] }}</p>
+            </div>
+            <div class="hotel-info">
+                <h4>Yorumlar: </h4>
+                <p>Yorum Sayısı:{{ hotel[4] }}</p>
+            </div>
+            <div class="hotel-info">
+                <h4>Hakkında</h4>
+                <p>Lokasyon:{{hotel[5]}}</p>
+                <p>Şehir:{{hotel[9]}}</p>
+                <p>Ülke:{{hotel[8]}}</p>
+            </div>           
+        </div>
+    </div>
+</div>
+
+<script>
+    function initMap() {
+        var istanbulLocation = { lat: 41.0082, lng: 28.9784 }; 
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: istanbulLocation,
+          zoom: 14,
+        });
+        var marker = new google.maps.Marker({
+          position: istanbulLocation,
+          map: map,
+          title: 'İstanbul',
+        });
+      }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-KX8LPSxWYz6hKoWkpyIav4TpQHvUStQ&libraries=places&callback=initMap"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

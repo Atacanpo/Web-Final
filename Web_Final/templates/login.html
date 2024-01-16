@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 150px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .google-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .custom-google-btn {
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .register-link a {
+            color: royalblue;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="https://www.hotels.com/_dms/interstitial/logo.svg?locale=tr_TR&siteid=300000028" alt="Hotels.com Logo">
+    </div>
+
+    <div class="login-container">
+        <h2>Giriş yapın veya hesap oluşturun</h2>
+
+        <div class="google-login">
+            <button class="custom-google-btn" onclick="googleLogin()">Google ile giriş yap</button>
+        </div>
+
+        <div>veya</div>
+
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label for="email" id="email-label"></label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="E-Posta" required>
+            </div>
+            <div class="form-group">
+                <label for="password" id="password-label"></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Şifre" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Giriş Yap</button>
+            </div>
+            </form>
+            
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            
+            <div class="register-link">
+                <p>Hesabınız yok mu? <a class="register-btn" href="{{ url_for('signup') }}">Kayıt Ol</a></p>
+            </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function onGoogleLoginSuccess(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            alert("Welcome, " + profile.getName() + "!");
+
+        }
+
+        function googleLogin() {
+            gapi.auth2.getAuthInstance().signIn();
+        }
+
+        gapi.load('auth2', function () {
+            gapi.auth2.init({
+                client_id: '932688542261-7u42smcckgk8lj8ot24s3s66ngstki7p.apps.googleusercontent.com'
+            });
+        });
+    </script>
+</body>
+
+</html>

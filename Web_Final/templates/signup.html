@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            height: auto;
+            max-width: 150px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            width: 48%;
+        }
+
+        .form-group select {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="https://www.hotels.com/_dms/interstitial/logo.svg?locale=tr_TR&siteid=300000028" alt="Hotels.com Logo">
+    </div>
+
+    <form id="registrationForm" action="/signup" method="post">
+        <h2>Kayıt Ol</h2>
+
+        <div class="form-group">
+            <label for="Name">Ad:</label>
+            <input type="text" class="form-control" id="Name" name="Name" placeholder="Ad" required>
+        </div>
+
+        <div class="form-group">
+            <label for="surName">Soyad:</label>
+            <input type="text" class="form-control" id="surName" name="surName" placeholder="Soyad" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-Posta:</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="E-Posta" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Şifre:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Şifre" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Şifre Tekrar:</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                placeholder="Şifre Tekrar" required>
+        </div>
+
+        <div class="form-group">
+            <label for="country">Ülke:</label>
+            <select class="form-control" id="country" name="country" required>
+                <option value="turkey">Türkiye</option>
+                <option value="turkey">America</option>
+                <option value="turkey">Rusya</option>
+                <option value="turkey">İngiltere</option>
+                <option value="turkey">Hollanda</option>
+                <option value="usa">Irak</option>
+            </select>
+
+            <label for="city">Şehir:</label>
+            <select class="form-control" id="city" name="city" required>
+                <option value="turkey">İzmir</option>
+                <option value="turkey">Kayseri</option>
+                <option value="turkey">İstanbul</option>
+                <option value="turkey">Samsun</option>
+                <option value="turkey">Trabzon</option>
+                <option value="usa">New York</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

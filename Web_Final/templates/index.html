@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <title>Belge</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="https://www.hotels.com/_dms/interstitial/logo.svg?locale=tr_TR&siteid=300000028" width="150" height="40" alt="">
+        </a>
+    
+        <ul class="navbar-nav ml-auto">
+            {% if 'user_id' in session %}
+
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="#">Merhaba, {{ session['user_name'] }}</a>
+                </li>
+            {% else %}
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{{ url_for('login') }}">Giriş Yap</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container mt-3">
+        <form action="{{ url_for('index') }}" method="get">
+            <p>Nereye?</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="destination_city" placeholder="Varış Noktası">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" id="date-range-picker" class="form-control" placeholder="Tarih">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control" placeholder="Misafir Sayısı">
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary">Ara</button>
+                </div>
+            </div>
+        </form>
+        <p class="mt-3">Bu hafta sonu tatil yapın !</p>
+        <p id="date-range-info" class="mt-2">Şu tarih aralığı için fırsatlar gösteriliyor: <span id="selected-dates"></span></p>
+    </div>
+
+    <div class="container mt-6">
+        {% if not destination_city %}
+            <div class="row">
+                {% for hotel in hotels %}
+                    <div class="col-md-4">
+                        <div class="card" style="width: 15rem;">
+                            <a href="{{ url_for('detail', hotel_id=hotel[0]) }}">
+                                <img class="card-img-top" src="{{ hotel[11] }}" alt="Card image cap">
+                            </a>
+                            <div class="card-body">
+                                <p class="card-reting">Hotel Puanı: {{ hotel[6] }}</p>
+                                <p class="card-comments">Hotel Yorumları: {{ hotel[4] }}</p>
+                                <h5 class="card-title">{{ hotel[1] }}</h5>
+                                <p class="card-city"> {{ hotel[9] }}</p>
+                                {% if 'user_id' in session and hotel[7] %}
+                                    <p class="card-price"> Üye Fiyatı: {{ hotel[7] }} TL</p>
+                                {% else %}
+                                    <p class="card-price"> Normal Fiyat: {{ hotel[2] }} TL</p>
+                                    {% if not 'user_id' in session %}
+                                        <a href="{{ url_for('login') }}" class="btn btn-success" id="loginButton">
+                                            Üye fiyatı için giriş yapın
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                                <a href="{{ url_for('detail', hotel_id=hotel[0]) }}" class="btn btn-primary ml-2" id="cardButton" onclick="logedUye('{{ hotel[0] }}')">
+                                    Otelin Detaylı Bilgisi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+
+            <div class="row">
+                {% for hotel in hotels %}
+                    <div class="col-md-4">
+                        <div class="card" style="width: 15rem;">
+                            <a href="{{ url_for('detail', hotel_id=hotel[0]) }}">
+                                <img class="card-img-top" src="{{ hotel[11] }}" alt="Card image cap">
+                            </a>
+                            <div class="card-body">
+                                <p class="card-reting">Hotel Puanı: {{ hotel[6] }}</p>
+                                <p class="card-comments">Hotel Yorumları: {{ hotel[4] }}</p>
+                                <h5 class="card-title">{{ hotel[1] }}</h5>
+                                <p class="card-city"> {{ hotel[9] }}</p>
+                                <p class="card-price"> {{ hotel[2] }} TL</p>
+                                <a href="{{ url_for('detail', hotel_id=hotel[0]) }}" class="btn btn-primary" id="cardButton" onclick="logedUye('{{ hotel[0] }}')">Detaylı Bilgi</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#date-range-picker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                startDate: '+0d',
+                todayHighlight: true
+            }).on('changeDate', function (e) {
+                var selectedDates = $('#date-range-picker').val();
+                $('#selected-dates').text(selectedDates);
+            });
+        });
+    </script>
+</body>
+
+</html>
